@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapping.AdminMapper">
+
+	<select id="queryHospitalInfo" resultType="hospital.enity.Hospital">
+		select *
+		from hospital
+	</select>
+
+	<select id="findDocByJnumber" parameterType="String" resultType="hospital.enity.DocInfo">
+
+		select *
+		from doctor
+		where
+		jnumber = #{jnumber}
+
+	</select>
+
+	<update id="updateDoctorByJnumber" parameterType="map">
+
+		update doctor set
+		department=#{department},
+		position=#{position},
+		deptNo=#{pid},
+		summary=#{summary}
+		where jnumber=#{jnumber}
+
+	</update>
+
+
+
+	<update id="updateUserById" parameterType="map">
+
+		update User set tname=#{tname},
+		sex=#{sex},
+		phone=#{phone},
+		email=#{email},
+		age=#{age}
+		where id=#{id}
+
+	</update>
+
+	<delete id="deleteCustomerById" parameterType="String">
+		delete
+    	from User
+    	where
+    	id=#{id}
+	</delete>
+
+	<update id="updateHospitalInfo" parameterType="map">
+		update hospital set name=#{name},
+		address=#{address},
+		telephone=#{telephone},
+		buildTime=#{buildTime},
+		youbian=#{youbian},
+		header=#{header},
+		email=#{email}
+	</update>
+
+	<select id="huanzheGuanli" resultType="hospital.enity.Yuyue">
+		select *
+		from yuyue
+	</select>
+
+	<select id="countYy" resultType="int">
+
+		SELECT COUNT(*) from yuyue WHERE ydate = #{format}
+
+	</select>
+
+	<select id="queryBySelect" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue t
+		left join doctor d on t.dname=d.dname
+		where
+		t.isok=#{isok}
+		and d.department=#{department}
+
+	</select>
+
+	<select id="searchByDt" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		ydate=#{date}
+
+	</select>
+
+	<select id="queryByIsok" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		isok=#{isok}
+
+	</select>
+
+	<select id="queryByIsD" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		isok=#{isok}
+		and ydate=#{date}
+
+	</select>
+
+	<select id="queryByAll" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue t
+		left join doctor d on t.dname=d.dname
+		where
+		t.isok=#{isok}
+		and ydate=#{date}
+		and d.department=#{department}
+
+	</select>
+
+	<select id="queryByDepartment" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue t
+		left join doctor d on t.dname=d.dname
+		where
+		d.department=#{department}
+
+	</select>
+
+	<select id="queryByDeD" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue t
+		left join doctor d on t.dname=d.dname
+		where
+		t.ydate=#{date}
+		and d.department=#{department}
+
+	</select>
+
+	<select id="newsInfo" resultType="hospital.enity.News">
+
+		select *
+		from news
+
+	</select>
+
+    <delete id="deleteNews" parameterType="int">
+
+    	delete
+    	from news
+    	where
+    	newsId=#{newsId}
+
+    </delete>
+
+	<delete id="deleteDoctor" parameterType="String">
+    	delete
+    	from doctor
+    	where
+    	uid=#{uid}
+
+    </delete>
+
+
+	<delete id="deleteUser" parameterType="String">
+    	delete
+    	from User
+    	where
+    	name=#{dname}
+    </delete>
+
+</mapper>

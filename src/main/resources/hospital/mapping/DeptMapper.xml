@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapping.DeptMapper">
+    <select id="deptList" resultType="hospital.enity.Department">
+		select *
+		from
+		dept
+	</select>
+
+	<select id="getByName" resultType="hospital.enity.Department">
+		select *
+		from
+		dept
+		where
+		deptName = #{department}
+	</select>
+
+	<select id="numOfAdept" resultType="int">
+		SELECT COUNT(*) FROM doctor WHERE deptNo = #{id}
+	</select>
+
+	<select id="getDeptById" resultType="hospital.enity.Department">
+		SELECT * FROM dept WHERE id = #{id}
+	</select>
+
+	<insert id="add" parameterType="hospital.enity.Department">
+		insert into dept (deptName,info,date,floor) values (#{deptName},#{info},#{date},#{floor})
+	</insert>
+
+	<update id="update" parameterType="hospital.enity.Department">
+		update dept set deptName=#{deptName},info=#{info},date=#{date},floor=#{floor} where id = #{id}
+	</update>
+
+	<delete id="delDept" parameterType="String">
+		delete from dept where id = #{id}
+	</delete>
+</mapper>

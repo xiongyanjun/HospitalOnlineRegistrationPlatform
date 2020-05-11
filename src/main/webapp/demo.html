@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/echarts.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var days = new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate();
+    var d1 = new Array()
+    var d2 = new Array()
+    for (var i = 1; i <= days; i++) {
+        d1[i-1] = i+"号";
+        d2[i-1] = i;
+    }
+    // 指定图表的配置项和数据
+    var option = {
+
+        xAxis: {
+            type: 'category',
+            data: d1
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: d2,
+            type: 'line'
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

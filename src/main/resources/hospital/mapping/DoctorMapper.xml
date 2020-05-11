@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hospital.mapping.DoctorMapper">
+
+	<select id="queryDoctorInfo" parameterType="Integer" resultType="hospital.enity.DocInfo">
+		select *
+		from doctor
+		where
+		uid=#{id}
+	</select>
+
+	<select id="findAllByDeptNo" parameterType="Integer" resultType="hospital.enity.DocInfo">
+		select *
+		from doctor
+		where
+		deptNo=#{deptNo}
+	</select>
+
+	<update id="saveDoctorInfo" parameterType="map">
+		update user set
+		phone=#{phone},
+		age=#{age},
+		email=#{email},
+		sex=#{sex},
+		tname=#{tname}
+		where
+		id = #{id}
+	</update>
+
+	<update id="saveDocInfo" parameterType="map">
+
+		update doctor set department=#{department},
+		position=#{position},
+		deptNo=#{deptNo}
+		where
+		uid=#{uid}
+	</update>
+
+	<select id="allYy" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		dname=#{name}
+		and isok=#{isok}
+
+	</select>
+
+	<select id="allYy3" parameterType="string" resultType="hospital.enity.Yuyue">
+		select *
+		from yuyue
+		where
+		jnumber=#{jnumber}
+		and isok=#{s}
+	</select>
+
+	<select id="allYy2" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		jnumber=#{id}
+		and isok=#{isok}
+
+	</select>
+
+	<update id="yuyueSuccess" parameterType="string">
+		update yuyue set isok=#{isok}
+		where yyh=#{yybh}
+	</update>
+
+	<insert id="insertDoctor">
+		insert into doctor(uid) values (#{uid})
+	</insert>
+
+	<update id="yuyueFail" parameterType="string">
+		update yuyue set isok=#{isok}
+		where yyh=#{yybh}
+	</update>
+
+	<select id="searchYyBydt" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		dname=#{name}
+		and ydate=#{date}
+
+	</select>
+
+	<select id="allJz" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		dname=#{name}
+		and isok=#{isok}
+
+	</select>
+
+	<select id="allJz1" parameterType="string" resultType="hospital.enity.Yuyue">
+		select *
+		from yuyue
+		where
+		jnumber=#{id}
+		and isok=#{isok}
+	</select>
+
+	<select id="allJiuJz" parameterType="string" resultType="hospital.enity.Yuyue">
+
+		select *
+		from yuyue
+		where
+		dname=#{name}
+		and isok=#{isok}
+		or
+		dname=#{name}
+		and isok=#{isok2}
+
+	</select>
+
+	<select id="queryByDepartment" parameterType="string" resultType="hospital.enity.Doctor">
+
+		select *
+		from doctor
+		where
+		department=#{department}
+
+	</select>
+
+</mapper>

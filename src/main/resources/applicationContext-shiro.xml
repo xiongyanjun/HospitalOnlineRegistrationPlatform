@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--凭证管理器-->
+<!--    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+        <!--加密方式-->
+<!--        <property name="hashAlgorithmName" value="SHA-256"/>-->
+        <!--加密次数-->
+<!--        <property name="hashIterations" value="2"/>-->
+<!--    </bean>-->
+
+    <!--自定义realm-->
+    <bean id="userRealm" class="hospital.security.MyRealm">
+
+    </bean>
+    <!--安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="userRealm"/>
+    </bean>
+
+    <!--shiro的上下文（securityUtils.setSecurityManager）-->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
+        <property name="arguments" ref="securityManager"/>
+    </bean>
+
+
+    <!--shiro的web过滤器-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证-->
+        <property name="loginUrl" value="/goLogin.jsp"/>
+        <!-- 通过unauthorizedUrl指定没有权限操作时跳转页面-->
+        <property name="unauthorizedUrl" value="/nopermission.jsp"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /page/** = anon
+                /css/** = anon
+                /js/** = anon
+                /img/** = anon
+                /fonts/** = anon
+                /page/admin/** = roles[admin]
+                /Admin/** = roles[admin]
+                /page/doctor/** = roles[doctor]
+                /Doctor/** = roles[doctor]
+                /page/customer/** = roles[customer]
+                /Customer/** = roles[customer]
+                /Login/** = anon
+            </value>
+        </property>
+    </bean>
+<!--    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
+<!--        <property name="securityManager" ref="securityManager"/>-->
+<!--    </bean>-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+<property name="proxyTargetClass" value="true" />
+    </bean>
+    <!--shiro生命周期-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+</beans>
